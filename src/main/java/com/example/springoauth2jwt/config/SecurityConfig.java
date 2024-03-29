@@ -1,5 +1,7 @@
 package com.example.springoauth2jwt.config;
 
+import com.example.springoauth2jwt.jwt.JWTUtil;
+import com.example.springoauth2jwt.oauth2.CustomSuccessHandler;
 import com.example.springoauth2jwt.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,6 +22,9 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
+    private final CustomSuccessHandler customSuccessHandler;
+    private final JWTUtil jwtUtil;
+
 
 
     @Bean
@@ -31,7 +36,8 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .oauth2Login((oauth)->oauth.userInfoEndpoint(
                         (userInfoEndpointConfig)->userInfoEndpointConfig
-                                .userService(customOAuth2UserService)))
+                                .userService(customOAuth2UserService))
+                        .successHandler(customSuccessHandler))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/").permitAll()
                         .anyRequest().authenticated()
