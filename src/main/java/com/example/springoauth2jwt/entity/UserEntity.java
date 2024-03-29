@@ -1,4 +1,4 @@
-package com.example.springoauth2jwt.config.entity;
+package com.example.springoauth2jwt.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,6 @@
 package com.example.springoauth2jwt.service;
 
-import com.example.springoauth2jwt.config.entity.UserEntity;
+import com.example.springoauth2jwt.entity.UserEntity;
 import com.example.springoauth2jwt.dto.*;
 import com.example.springoauth2jwt.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

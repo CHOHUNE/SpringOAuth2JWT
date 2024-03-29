@@ -1,6 +1,6 @@
 package com.example.springoauth2jwt.repository;
 
-import com.example.springoauth2jwt.config.entity.UserEntity;
+import com.example.springoauth2jwt.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
