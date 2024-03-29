@@ -1,6 +1,9 @@
 package com.example.springoauth2jwt.service;
 
+import com.example.springoauth2jwt.config.entity.UserEntity;
 import com.example.springoauth2jwt.dto.*;
+import com.example.springoauth2jwt.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -8,7 +11,11 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+
+    private final UserRepository userRepository;
+
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -36,18 +43,43 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         String username = oAuth2Response.getProviderId() + " " + oAuth2Response.getProviderId();
         // 여기서 부터는 로그인 완료 이후의 추가 처리 로직 작성
 
-        UserDTO userDTO = new UserDTO();
+        UserEntity existData = userRepository.findByUsername(username);
 
-        userDTO.setUsername(username);
-        userDTO.setName(oAuth2Response.getName());
-        userDTO.setRole("ROLE_USER");
+        if (existData == null) {
+            UserEntity userEntity = new UserEntity();
+            userEntity.setUsername(username);
+            userEntity.setName(oAuth2Response.getName());
+            userEntity.setEmail(oAuth2Response.getEmail());
+
+            userRepository.save(userEntity);
+
+            UserDTO userDTO = new UserDTO();
+
+            userDTO.setUsername(username);
+            userDTO.setName(oAuth2Response.getName());
+            userDTO.setRole("ROLE_USER");
+
+            return new CustomOAuth2User(userDTO);
 
 
+        }else{
 
-        return new CustomOAuth2User(userDTO);
+            existData.setUsername(username);
+            existData.setEmail(oAuth2Response.getEmail());
+            existData.setName(oAuth2Response.getName());
+
+            userRepository.save(existData);
+
+            UserDTO userDTO = new UserDTO();
+
+            userDTO.setUsername(username);
+            userDTO.setUsername(existData.getUsername());
+            userDTO.setName(oAuth2Response.getName());
+            userDTO.setRole(existData.getRole());
+
+            return new CustomOAuth2User(userDTO);
+        }
     }
-
-
 }
 
 // 해당 서비스는 SecurityConfig 에 있는 oAuth2Login에 등록 해야 한다.
