@@ -33,6 +33,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         if (registrationId.equals("naver")) {
 
             oAuth2Response = new NaverResponse(oAuth2User.getAttributes());
+
         } else if (registrationId.equals("google")) {
 
             oAuth2Response = new GoogleResponse(oAuth2User.getAttributes());
@@ -40,7 +41,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             return null;
         }
 
-        String username = oAuth2Response.getProviderId() + " " + oAuth2Response.getProviderId();
+        String username = oAuth2Response.getProvider() + " " + oAuth2Response.getProviderId();
         // 여기서 부터는 로그인 완료 이후의 추가 처리 로직 작성
 
         UserEntity existData = userRepository.findByUsername(username);

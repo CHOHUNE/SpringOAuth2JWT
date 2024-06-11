@@ -25,7 +25,6 @@ import java.util.Collections;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-
     private final CustomSuccessHandler customSuccessHandler;
     private final JWTUtil jwtUtil;
 

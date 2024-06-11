@@ -25,7 +25,7 @@ public class JWTUtil {
     }
 
     public String getRole(String token) {
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("roloe", String.class);
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("role", String.class);
     }
 
     public Boolean isExpired(String token) {
@@ -44,11 +44,12 @@ public class JWTUtil {
     }
 }
 
-//Jwts.parser(): JWT 토큰을 파싱하기 위한 Parser 생성
-//- verifyWith(): 생성한 Parser에 검증에 필요한 Key 제공
-//- build(): Parser 구성 완료
-//- parseClaims(): 주어진 토큰 파싱
-//parser() 부터 parseClaims()까지 동일
-//- getPayload(): 토큰 Payload 영역 접근
-//- getExpiration(): 토큰의 Expiration Claim 값 얻기
-//- before(): Expiration 값이 현재 시간 이전인지 확인
+/*
+Jwts.parser(): JWT 토큰을 파싱하기 위한 Parser 생성
+- verifyWith(): 생성한 Parser에 검증에 필요한 Key 제공
+- build(): Parser 구성 완료
+- parseClaims(): 주어진 토큰 파싱
+parser() 부터 parseClaims()까지 동일
+- getPayload(): 토큰 Payload 영역 접근
+- getExpiration(): 토큰의 Expiration Claim 값 얻기
+- before(): Expiration 값이 현재 시간 이전인지 확인*/

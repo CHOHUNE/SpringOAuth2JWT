@@ -11,7 +11,7 @@ public class GoogleResponse implements OAuth2Response {
 
     @Override
     public String getProvider() {
-        return "gogle";
+        return "google";
     }
 
     @Override
@@ -29,3 +29,4 @@ public class GoogleResponse implements OAuth2Response {
         return attribute.get("name").toString();
     }
 }
+
